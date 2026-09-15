@@ -1,73 +1,37 @@
-# Housing Price Prediction — Internship Task 3
+# Housing Price Prediction — Linear Regression
 
-This repository implements simple and multiple Linear Regression for housing prices with a clean, reproducible pipeline that follows Task 3’s required steps and deliverables from data import to model interpretation.
+Task 3 of the Elevate Labs AI & ML internship (Sep–Nov 2025).
 
-## Objective
+## Overview
+Linear Regression on the Housing Price Prediction dataset (Kaggle, via kagglehub): preprocessing, train/test split, model fitting, evaluation, and coefficient interpretation.
 
-Implement and understand Linear Regression by importing and preprocessing the dataset, splitting into train/test, fitting a scikit-learn LinearRegression model, evaluating with MAE/MSE/R², and plotting a regression line with coefficient interpretation as per the internship brief.[1]
+## Files
+- `Task_3.ipynb` — notebook with the full pipeline
+- `Housing.csv` — raw input data (545 rows × 13 columns)
+- `Housing_Cleaned.csv` — cleaned, encoded, scaled model matrix produced by the notebook
 
-## Dataset
+## What it does
+1. Download the dataset with `kagglehub` and load it
+2. Preprocess with a `ColumnTransformer` (median imputation + `StandardScaler` for numeric columns, most-frequent imputation + one-hot encoding for categorical columns)
+3. Train/test split (80/20, `random_state=42`)
+4. Fit `LinearRegression` inside a `Pipeline`
+5. Evaluate with MAE, MSE, RMSE, and R²
+6. Plot predicted vs. actual values and a simple-regression line for the top correlated numeric feature
+7. Interpret standardized coefficients
 
-- Source: Kaggle dataset “Housing Price Prediction” by harishkumardatalab, accessed programmatically via KaggleHub for reproducibility and versioning.[2]
-- Typical schema: tabular housing attributes with a numerical price target column (e.g., Price/SalePrice), appropriate for both simple and multiple Linear Regression demonstrations in this task.[2][1]
+## Results
+Exact metrics printed in the notebook (test set):
+- MAE: `970,043.4039`
+- MSE: `1,754,318,687,330.6689`
+- RMSE: `1,324,506.9601`
+- R²: `0.6529`
 
-## Environment
-
-- Python 3.x with pandas, numpy, scikit-learn, seaborn, matplotlib, and kagglehub, aligning with Task 3 tools and enabling end-to-end data-to-model workflows for regression.[1]
-
-Example setup:
-```bash
-pip install kagglehub pandas numpy scikit-learn seaborn matplotlib
-```
-
-## Quick start
-
-- Use KaggleHub to download the dataset and automatically locate the CSV, then set distinct INPUT_CSV and OUTPUT_CSV paths for clean separation of raw and processed artifacts as required for a professional workflow.
-
-Python snippet:
-```python
-import kagglehub
-
-# Download latest version
-path = kagglehub.dataset_download("harishkumardatalab/housing-price-prediction")
-
-print("Path to dataset files:", path)
-```
+Largest-magnitude coefficients: `bathrooms` (+521,879), `area` (+519,552), `airconditioning_yes` (+395,713), `stories` (+349,251), `hotwaterheating_yes` (+342,325).
 
 ## How to run
+Open `Task_3.ipynb` in Jupyter and run all cells. The first cell downloads the dataset via `kagglehub`; the notebook then reads/writes CSVs from a hardcoded local cache path — update `INPUT_CSV`/`OUTPUT_CSV` if needed.
 
-- Open the provided notebook or script, run the KaggleHub download cell, confirm the detected INPUT_CSV, set a different OUTPUT_CSV (e.g., <dataset_dir>/processed/housing_cleaned_model_matrix.csv), and execute all cells to build the model, render visuals, print metrics, and write the cleaned model matrix.[2][1]
+Requires: pandas, numpy, seaborn, matplotlib, scikit-learn, kagglehub
 
-## Workflow (matches Task 3 mini guide)
-
-- Import and preprocess: impute numeric with median, encode categoricals with OneHotEncoder(handle_unknown="ignore"), scale numeric with StandardScaler via a ColumnTransformer in a Pipeline to produce a clean model matrix for Linear Regression.[1]
-- Train/test split: hold out a test set with train_test_split(random_state=42) to ensure unbiased evaluation and reproducibility for MAE/MSE/R² reports.[1]
-- Fit model: scikit-learn LinearRegression wrapped after the preprocessing stage in a Pipeline for leakage-safe training and simpler deployment of the full transformation stack.[1]
-- Evaluate: compute MAE, MSE, and R² (and RMSE for interpretability) on the test set to quantify absolute error, squared error, and explained variance per the task’s metrics.[1]
-- Plot and interpret: visualize predicted vs actual with an identity line and draw a simple-regression line for the strongest numeric predictor, then print coefficients to interpret feature impact and directionality as required.[1]
-
-## Outputs
-
-- Console metrics: MAE, MSE, RMSE, and R² on the test set to summarize predictive accuracy and variance explanation for the Linear Regression baseline.[1]
-- Visuals: Predicted vs Actual scatter with the ideal y=x line and a single-feature regression line chart to illustrate linear fit for the top correlated numeric predictor in isolation.[1]
-- Artifacts: A fully numeric, cleaned model matrix CSV saved to OUTPUT_CSV with transformed features and target, ready for downstream modeling or validation checks.[1]
-
-## Interpretation notes
-
-- Coefficients are reported alongside feature names generated by the ColumnTransformer (original numeric plus one-hot categories), enabling clear interpretation of effect size and sign under standardized inputs as a best practice for regression explainability in this task.[1]
-- Predicted vs actual plots help visually assess calibration and systematic bias, while single-feature line plots clarify linear trends for the most influential numeric predictor, supporting the “plot regression line and interpret coefficients” requirement.[1]
-
-## Repository structure
-
-- notebooks/: linear_regression_task3.ipynb with all steps, metrics, and visuals rendered inline for straightforward evaluation against the Task 3 rubric.[1]
-- src/: linear_regression_task3.py to run the same pipeline as a script if preferred in non-notebook environments consistent with the brief.[1]
-- data/: optional local placement for CSVs if not using KaggleHub runtime paths; KaggleHub-managed paths are recommended for reproducibility.[2]
-- outputs/: saved plots and the processed model matrix CSV written to a distinct path to separate raw and transformed assets professionally.[1]
-
-## Reproducibility
-
-- Data pulled via KaggleHub ensures consistent versions, preprocessing is encapsulated in a single Pipeline to prevent leakage, and a fixed random_state makes train/test metrics replicable per Task 3 expectations.
-
-<img width="618" height="412" alt="image" src="https://github.com/user-attachments/assets/845fd21a-0f53-4f98-969b-14fffab2b72a" />
-<img width="618" height="412" alt="image" src="https://github.com/user-attachments/assets/7500dec4-af8f-478a-8894-8001726b8084" />
-
+## Author
+Joshua Jose · MSc Data Science, FAU Erlangen-Nürnberg · linkedin.com/in/j0shuaj0se
